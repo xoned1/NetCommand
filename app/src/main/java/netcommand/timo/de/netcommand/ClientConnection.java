@@ -9,31 +9,35 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
 
-public class ClientConnect extends AsyncTask<String, Void, Boolean> {
+public class ClientConnection extends AsyncTask<String, Void, Boolean> {
 
+    private String ip;
+    private Socket socket;
 
+    public ClientConnection(String ip) {
+        this.ip = ip;
+    }
 
     @Override
     protected Boolean doInBackground(String... params) {
 
-        String ip = params[0];
-        try (Socket socket = new Socket(ip, 1337)) {
+        String command = params[0];
+        try {
+            if (socket == null || socket.isClosed()) {
+
+                socket = new Socket(ip, 1337);
+            }
 
             OutputStream os = socket.getOutputStream();
 
             OutputStreamWriter writer = new OutputStreamWriter(os);
             BufferedWriter br = new BufferedWriter(writer);
 
-            writer.write("rc");
-            writer.write("exit");
+            writer.write(command + "\n");
             writer.close();
-
-            socket.close();
-
 
         } catch (IOException e) {
             e.printStackTrace();
-
         }
         return true;
     }

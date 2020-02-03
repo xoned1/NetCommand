@@ -1,4 +1,16 @@
 <resources>
-    <string name="app_name">NetCommand 1.0</string>
+    <string name="app_name">Remote Control</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_test">TestActivity</string>
+    <string name="title_volume">Volume</string>
+    <string name="title_misc">Misc</string>
+    <string name="title_mouse">Mouse</string>
+    <string name="empty_list">Searching..</string>
+    <string name="command_volume_up">Volume Up</string>
+    <string name="command_volume_down">Volume Down</string>
+    <string name="command_volume_mute">Mute</string>
+
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
