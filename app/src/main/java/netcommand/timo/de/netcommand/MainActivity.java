@@ -1,6 +1,7 @@
 package netcommand.timo.de.netcommand;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
@@ -20,6 +21,7 @@ import android.widget.TextView;
 
 import java.io.IOException;
 import java.net.InetAddress;
+import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 
@@ -29,34 +31,31 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                 this,
                 android.R.layout.simple_list_item_1,
-                new ArrayList<String>());
+                new ArrayList<>());
         BroadcastDiscovery serviceDiscovery = new BroadcastDiscovery("NetRobot", adapter, this);
 
-        Thread broadcastTread = new Thread((serviceDiscovery));
-        broadcastTread.start();
+        Thread broadcastThread = new Thread((serviceDiscovery));
+        broadcastThread.start();
 
-
-        TextView emptyListText =  (TextView)findViewById(R.id.empty);
-        ListView listViewHosts = (ListView)findViewById(R.id.listViewHosts);
+        TextView emptyListText = (TextView) findViewById(R.id.empty);
+        ListView listViewHosts = (ListView) findViewById(R.id.listViewHosts);
         listViewHosts.setAdapter(adapter);
         listViewHosts.setEmptyView(emptyListText);
-
-        adapter.add("192.168.0.1 / xoned");
-        adapter.add("192.168.0.2 / bla");
-
         listViewHosts.setOnItemClickListener((adapterView, view, i, l) -> {
 
-                String host = adapterView.getItemAtPosition(i).toString();
-                String ip = host.split("/")[0].trim();
-                Intent intent = new Intent(MainActivity.this, CommandActivity.class);
-                intent.putExtra("ip", ip);
-                startActivity(intent);
+            String host = adapterView.getItemAtPosition(i).toString();
+            String ip = host.split("/")[0].trim();
+            Intent intent = new Intent(MainActivity.this, CommandActivity.class);
+
+            new SetSocketTask().execute(ip);
+
+            startActivity(intent);
         });
 
     }
@@ -67,7 +66,6 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
-
 
 
     @Override

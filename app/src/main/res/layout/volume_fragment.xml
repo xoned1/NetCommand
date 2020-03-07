@@ -52,12 +52,12 @@
 
         <Button
             android:id="@+id/btnMute"
-            android:layout_width="wrap_content"
+            android:layout_width="118dp"
             android:layout_height="match_parent"
             android:layout_gravity="center"
+            android:background="@null"
             android:drawableEnd="@drawable/ic_microphone_slash"
             android:drawablePadding="20dp"
-            android:background="@null"
             android:gravity="center"
             android:text="@string/command_volume_mute"
             android:textAlignment="center" />
@@ -80,15 +80,14 @@
 
         <Button
             android:id="@+id/btnVolumeDown"
-            android:layout_width="wrap_content"
+            android:layout_width="130dp"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:gravity="center"
             android:background="@null"
             android:drawableEnd="@drawable/ic_volume_down"
             android:drawablePadding="20dp"
-            android:text="@string/command_volume_down"
-            />
+            android:gravity="center"
+            android:text="@string/command_volume_down" />
     </FrameLayout>
 
 </android.support.constraint.ConstraintLayout>

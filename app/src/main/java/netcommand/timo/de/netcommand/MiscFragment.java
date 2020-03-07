@@ -7,7 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
+import android.widget.Button;
 
 
 public class MiscFragment extends Fragment {
@@ -26,7 +26,12 @@ public class MiscFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.misc_fragment, container, false);
+
+        View view = inflater.inflate(R.layout.misc_fragment, container, false);
+        Button btnMute = (Button) view.findViewById(R.id.button);
+        btnMute.setOnClickListener(bla);
+
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -66,5 +71,15 @@ public class MiscFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    private View.OnClickListener bla = (view -> bla());
+
+    public void bla() {
+        new ClientCommand().execute("SHUTDOWN");
+    }
+
+    private String getIP() {
+        return getActivity().getIntent().getStringExtra("ip");
     }
 }

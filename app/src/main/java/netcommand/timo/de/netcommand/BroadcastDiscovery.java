@@ -1,25 +1,21 @@
 package netcommand.timo.de.netcommand;
 
 import android.app.Activity;
-import android.content.Context;
-import android.util.Log;
 import android.widget.ArrayAdapter;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Objects;
 
 public class BroadcastDiscovery implements Runnable {
 
-    private static DatagramSocket socket = null;
-    ArrayAdapter<String> adapter;
+    private ArrayAdapter<String> adapter;
     private String message;
-    Activity context;
+    private Activity context;
 
-    public BroadcastDiscovery(String message, ArrayAdapter<String> adapter, Activity context) {
+    BroadcastDiscovery(String message, ArrayAdapter<String> adapter, Activity context) {
         this.message = message;
         this.adapter = adapter;
         this.context = context;
@@ -44,7 +40,7 @@ public class BroadcastDiscovery implements Runnable {
                 context.runOnUiThread(() -> {
                     boolean missing = true;
                     for(int i = 0; i < adapter.getCount(); i++) {
-                        if(adapter.getItem(i).equals(device))
+                        if(Objects.equals(adapter.getItem(i), device))
                             missing = false;
                     }
                     if(missing) {

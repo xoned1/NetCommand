@@ -16,7 +16,6 @@ public class MouseFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
     private View.OnClickListener leftClickListener = (view) -> leftClick(getIp());
     private View.OnClickListener rightClickListener = (view) -> rightClick(getIp());
-    private ClientConnection clientConnection;
 
     public MouseFragment() {
     }
@@ -33,7 +32,8 @@ public class MouseFragment extends Fragment {
                              ViewGroup container,
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_mouse, container, false);
-        this.clientConnection = ClientProvider.get(getIp());
+
+
 
         FrameLayout frBtnLeftClick = (FrameLayout)view.findViewById(R.id.frBtnLeftClick);
         frBtnLeftClick.setOnClickListener(leftClickListener);
@@ -90,10 +90,10 @@ public class MouseFragment extends Fragment {
     }
 
     private void leftClick(String ip) {
-        this.clientConnection.execute("CLICK_LEFT");
+        new ClientCommand().execute("CLICK_LEFT");
     }
 
     private void rightClick(String ip) {
-       this.clientConnection.execute("CLICK_RIGHT");
+       new ClientCommand().execute("CLICK_RIGHT");
     }
 }

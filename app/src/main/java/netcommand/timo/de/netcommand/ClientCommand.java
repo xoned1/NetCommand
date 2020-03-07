@@ -2,20 +2,18 @@ package netcommand.timo.de.netcommand;
 
 import android.os.AsyncTask;
 
-import java.io.BufferedOutputStream;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
 
-public class ClientConnection extends AsyncTask<String, Void, Boolean> {
+public class ClientCommand extends AsyncTask<String, Void, Boolean> {
 
-    private String ip;
-    private Socket socket;
+    private Socket socket = SocketHandler.getSocket();
+    ;
 
-    public ClientConnection(String ip) {
-        this.ip = ip;
+    ClientCommand() {
     }
 
     @Override
@@ -23,19 +21,13 @@ public class ClientConnection extends AsyncTask<String, Void, Boolean> {
 
         String command = params[0];
         try {
-            if (socket == null || socket.isClosed()) {
-
-                socket = new Socket(ip, 1337);
-            }
-
             OutputStream os = socket.getOutputStream();
-
             OutputStreamWriter writer = new OutputStreamWriter(os);
-            BufferedWriter br = new BufferedWriter(writer);
+            BufferedWriter bw  = new BufferedWriter(writer);
 
-            writer.write(command + "\n");
-            writer.close();
-
+            bw.write(command + "\n");
+            bw.newLine();
+            bw.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }

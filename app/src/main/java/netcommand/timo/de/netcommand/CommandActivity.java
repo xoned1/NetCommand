@@ -56,4 +56,5 @@ public class CommandActivity
     public void onFragmentInteraction(Uri uri) {
 
     }
+
 }
